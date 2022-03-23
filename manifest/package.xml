@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <name>CustomObject</name>
-        <members>*</members>
-    </types>
-    <types>
-        <name>CustomField</name>
-        <members>*</members>
-    </types>
-    <types>
         <name>ApexClass</name>
-        <members>*</members>
-    </types>
-    <types>
-        <name>ApexTrigger</name>
-        <members>*</members>
+        <members>PardotCampaignAction</members>
+        <members>PardotCustomRedirectAction</members>
     </types>
     <version>52.0</version>
 </Package>
