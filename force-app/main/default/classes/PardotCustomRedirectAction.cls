@@ -38,8 +38,9 @@ public with sharing class PardotCustomRedirectAction {
             req.setHeader('Pardot-Business-Unit-Id', customRedirect.businessUnitId);
             req.setEndpoint('callout:'+NAMED_CREDENTIAL + '/v5/objects/custom-redirects?fields=id,trackedUrl');
             req.setMethod('POST');
-
+            customRedirect.businessUnitId=null;//clear it out, as if it is included in the body Pardot will yell at us
             String body = JSON.serialize(customRedirect, true);
+            req.setBody(body);
             System.debug('Submitting JSON payload: ' + body);
             try {
                 HttpResponse response = http.send(req);
