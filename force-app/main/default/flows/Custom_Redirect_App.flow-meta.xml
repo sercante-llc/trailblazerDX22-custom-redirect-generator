@@ -24,6 +24,24 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>gaCampaign</name>
+            <value>
+                <elementReference>Get_Campaign.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>gaMedium</name>
+            <value>
+                <stringValue>social</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>gaSource</name>
+            <value>
+                <elementReference>GTM_Sources</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>campaignId</name>
             <value>
                 <elementReference>Get_Pardot_Campaign_Id.id</elementReference>
@@ -117,7 +135,6 @@
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
-        <backButtonLabel>Make another</backButtonLabel>
         <fields>
             <name>Success</name>
             <fieldText>&lt;p&gt;Yay it worked&lt;/p&gt;</fieldText>
@@ -162,6 +179,14 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>GTM_Sources</name>
+            <dataType>String</dataType>
+            <fieldText>GTM Sources</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;For multiple values, separate them with a comma. eg: facebook,linkedin,twitter&lt;/p&gt;</helpText>
+            <isRequired>false</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
