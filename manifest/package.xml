@@ -5,5 +5,9 @@
         <members>PardotCampaignAction</members>
         <members>PardotCustomRedirectAction</members>
     </types>
+    <types>
+        <name>Flow</name>
+        <members>Custom_Redirect_App</members>
+    </types>
     <version>52.0</version>
 </Package>
