@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Create_Custom_Redirect</name>
-        <label>Create Custom Redirect</label>
+        <name>Create_Custom_Redirects</name>
+        <label>Create Custom Redirects</label>
         <locationX>176</locationX>
         <locationY>518</locationY>
         <actionName>PardotCustomRedirectAction</actionName>
@@ -14,7 +14,7 @@
         <inputParameters>
             <name>businessUnitId</name>
             <value>
-                <elementReference>Get_Campaign.TenantId</elementReference>
+                <elementReference>Get_SF_Campaign.TenantId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -26,13 +26,13 @@
         <inputParameters>
             <name>gaCampaign</name>
             <value>
-                <elementReference>Get_Campaign.Id</elementReference>
+                <elementReference>Get_SF_Campaign.Id</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>gaMedium</name>
             <value>
-                <stringValue>social</stringValue>
+                <stringValue>publisher</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -53,6 +53,7 @@
                 <elementReference>CustomRedirectUrl.value</elementReference>
             </value>
         </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
         <name>Get_Pardot_Campaign_Id</name>
@@ -62,19 +63,19 @@
         <actionName>PardotCampaignAction</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Create_Custom_Redirects</targetReference>
+            <targetReference>Ask_for_Custom_Redirect_Info</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>businessUnitId</name>
             <value>
-                <elementReference>Get_Campaign.TenantId</elementReference>
+                <elementReference>Get_SF_Campaign.TenantId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>name</name>
             <value>
-                <elementReference>Get_Campaign.Name</elementReference>
+                <elementReference>Get_SF_Campaign.Name</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -102,8 +103,9 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Get_Campaign</name>
-        <label>Get Campaign</label>
+        <description>Get the Salesforce Campaign record, so that we can gain access to the Name and the Pardot Business Unit Id (TenantId)</description>
+        <name>Get_SF_Campaign</name>
+        <label>Get SF Campaign</label>
         <locationX>176</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
@@ -128,31 +130,15 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
-        <name>Confirmation_Screen</name>
-        <label>Confirmation Screen</label>
-        <locationX>176</locationX>
-        <locationY>638</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>Success</name>
-            <fieldText>&lt;p&gt;Yay it worked&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Create_Custom_Redirects</name>
-        <label>Create Custom Redirects</label>
+        <name>Ask_for_Custom_Redirect_Info</name>
+        <label>Ask for Custom Redirect Info</label>
         <locationX>176</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Create_Custom_Redirect</targetReference>
+            <targetReference>Create_Custom_Redirects</targetReference>
         </connector>
         <fields>
             <name>ScreenInputInstructions</name>
@@ -162,6 +148,9 @@
         <fields>
             <name>CustomRedirectName</name>
             <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Get_SF_Campaign.Name</elementReference>
+            </defaultValue>
             <fieldText>Name</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
@@ -191,11 +180,27 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <screens>
+        <name>Confirmation_Screen</name>
+        <label>Confirmation Screen</label>
+        <locationX>176</locationX>
+        <locationY>638</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Success</name>
+            <fieldText>&lt;p&gt;{!Create_Custom_Redirects.resultMessage}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Campaign</targetReference>
+            <targetReference>Get_SF_Campaign</targetReference>
         </connector>
     </start>
     <status>Active</status>
